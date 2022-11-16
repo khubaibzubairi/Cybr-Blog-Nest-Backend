@@ -20,10 +20,7 @@ export class BlogPostService {
   }
 
   async updatePost(id: string, post: BlogPost): Promise<postDocument> {
-    const currentPost = this.postModel.findById(id);
-    if (currentPost) {
-      return await this.postModel.findByIdAndUpdate(id, post, { new: true });
-    }
+    return await this.postModel.findByIdAndUpdate(id, post, { new: true });
   }
 
   async deletePost(id: string) {
@@ -31,5 +28,9 @@ export class BlogPostService {
     if (currentPost) {
       return await this.postModel.deleteOne({ _id: (await currentPost).id });
     }
+  }
+
+  async getById(id: string): Promise<postDocument> {
+    return await this.postModel.findById(id);
   }
 }

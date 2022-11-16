@@ -36,6 +36,6 @@ export class ImageController {
     @Request() req,
   ) {
     ImageController.imagePath = `${file.filename}`;
-    return { Image: ImageController.imagePath, type: file.mimetype };
+    return { url: ImageController.imagePath.toString(), type: file.mimetype };
   }
 }

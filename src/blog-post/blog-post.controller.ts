@@ -3,7 +3,9 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
@@ -23,9 +25,14 @@ export class BlogPostController {
     return await this.blogPostService.getPost();
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(@Param('id') id: string, @Body() post: BlogPost) {
-    return await this.blogPostService.updatePost(id, post);
+    const getpost = await this.blogPostService.getById(id);
+    if (getpost) {
+      return await this.blogPostService.updatePost(id, post);
+    } else {
+      throw new NotFoundException('POST NOT FOUND');
+    }
   }
 
   @Delete(':id')
