@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
 import { BlogPost } from './blog-schema';
+import * as fs from 'fs';
 
 @Controller('blog-post')
 export class BlogPostController {
@@ -43,5 +44,14 @@ export class BlogPostController {
     } else {
       throw new NotFoundException('THERE IS NO SUVH POST YOU WANT TO DELETE');
     }
+  }
+  @Delete('server/:filename')
+  async fromDiskStorage(@Param('filename') filename: string) {
+    fs.unlink(`./assets/${filename}`, (error) => {
+      if (error) {
+        console.log(error);
+        return error;
+      }
+    });
   }
 }
