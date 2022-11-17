@@ -17,17 +17,20 @@ import * as fs from 'fs';
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
   @Post()
-  async create(@Body() post: BlogPost) {
+  async create(@Body() post: BlogPost): Promise<BlogPost> {
     return await this.blogPostService.createPost(post);
   }
 
   @Get()
-  async get() {
+  async get(): Promise<BlogPost[]> {
     return await this.blogPostService.getPost();
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() post: BlogPost) {
+  async update(
+    @Param('id') id: string,
+    @Body() post: BlogPost,
+  ): Promise<BlogPost> {
     const getpost = await this.blogPostService.getById(id);
     if (getpost) {
       return await this.blogPostService.updatePost(id, post);
@@ -37,7 +40,7 @@ export class BlogPostController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string): Promise<any> {
     const getpost = await this.blogPostService.getById(id);
     if (getpost) {
       return await this.blogPostService.deletePost(id);
