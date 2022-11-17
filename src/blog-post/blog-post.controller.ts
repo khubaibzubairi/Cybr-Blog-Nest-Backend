@@ -37,6 +37,11 @@ export class BlogPostController {
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return await this.blogPostService.deletePost(id);
+    const getpost = await this.blogPostService.getById(id);
+    if (getpost) {
+      return await this.blogPostService.deletePost(id);
+    } else {
+      throw new NotFoundException('THERE IS NO SUVH POST YOU WANT TO DELETE');
+    }
   }
 }
