@@ -12,8 +12,6 @@ export class BlogPostService {
   ) {}
 
   async createPost(post: BlogPost): Promise<postDocument> {
-    // post.slug=this.postModel
-    // post.slug = this.generateSlug(post);
     post.slug = await this.generateSlug(post.title);
     post.image = ImageController.imagePath;
     return await this.postModel.create(post);
@@ -38,7 +36,7 @@ export class BlogPostService {
     return await this.postModel.findById(id);
   }
 
-  async generateSlug(title: string) {
+  async generateSlug(title: string): Promise<string> {
     // return await slugify(title.slice(1, 3) + join('-') + title);
     return slugify(title);
   }
