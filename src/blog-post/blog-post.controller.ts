@@ -25,7 +25,11 @@ export class BlogPostController {
   async get(): Promise<BlogPost[]> {
     return await this.blogPostService.getPost();
   }
-  @Get(':category')
+  @Get(':slug')
+  async findOne(@Param('slug') slug: string): Promise<BlogPost> {
+    return await this.blogPostService.findOne(slug);
+  }
+  @Get('categoryPosts/:category')
   async byCategory(@Param('category') category: string): Promise<BlogPost[]> {
     const cetegoryPosts = await this.blogPostService.byCategory(category);
     console.log(cetegoryPosts);

@@ -39,7 +39,9 @@ export class BlogPostService {
   async getById(id: string): Promise<postDocument> {
     return await this.postModel.findById(id);
   }
-
+  async findOne(slug: string): Promise<postDocument> {
+    return await this.postModel.findOne({ slug: slug });
+  }
   async generateSlug(title: string): Promise<string> {
     // return await slugify(title.slice(1, 3) + join('-') + title);
     return slugify(title);
