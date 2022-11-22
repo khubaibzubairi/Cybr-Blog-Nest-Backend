@@ -25,6 +25,12 @@ export class BlogPostController {
   async get(): Promise<BlogPost[]> {
     return await this.blogPostService.getPost();
   }
+  @Get(':category')
+  async byCategory(@Param('category') category: string): Promise<BlogPost[]> {
+    const cetegoryPosts = await this.blogPostService.byCategory(category);
+    console.log(cetegoryPosts);
+    return cetegoryPosts;
+  }
 
   @Patch(':id')
   async update(

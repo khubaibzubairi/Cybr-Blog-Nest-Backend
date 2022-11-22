@@ -32,6 +32,10 @@ export class BlogPostService {
     }
   }
 
+  async byCategory(category: string): Promise<any> {
+    return await this.postModel.find({ category });
+  }
+
   async getById(id: string): Promise<postDocument> {
     return await this.postModel.findById(id);
   }
