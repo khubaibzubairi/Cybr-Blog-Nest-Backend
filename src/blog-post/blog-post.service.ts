@@ -11,28 +11,28 @@ export class BlogPostService {
     @InjectModel(BlogPost.name) private postModel: Model<postDocument>,
   ) {}
 
-  async createPost(post: BlogPost): Promise<postDocument> {
+  async create(post: BlogPost): Promise<postDocument> {
     post.slug = await this.generateSlug(post.title);
     post.image = ImageController.imagePath;
     return await this.postModel.create(post);
   }
 
-  async getPost() {
+  async findAll() {
     return await this.postModel.find();
   }
 
-  async updatePost(id: string, post: BlogPost): Promise<postDocument> {
+  async updateOne(id: string, post: BlogPost): Promise<postDocument> {
     return await this.postModel.findByIdAndUpdate(id, post, { new: true });
   }
 
-  async deletePost(id: string) {
+  async deleteOne(id: string) {
     const currentPost = this.postModel.findById(id);
     if (currentPost) {
       return await this.postModel.deleteOne({ _id: (await currentPost).id });
     }
   }
 
-  async byCategory(category: string): Promise<BlogPost[]> {
+  async getbyCategory(category: string): Promise<BlogPost[]> {
     return await this.postModel.find({ category });
   }
 

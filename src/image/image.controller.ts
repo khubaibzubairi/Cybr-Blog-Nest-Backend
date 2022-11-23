@@ -10,7 +10,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { ImageService } from './image.service';
 
-@Controller('image')
+@Controller('images')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
   static imagePath: string;

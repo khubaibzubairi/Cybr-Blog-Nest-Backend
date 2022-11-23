@@ -13,47 +13,49 @@ import { BlogPostService } from './blog-post.service';
 import { BlogPost } from './blog-schema';
 import * as fs from 'fs';
 
-@Controller('blog-post')
+@Controller('blog-posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
   @Post()
   async create(@Body() post: BlogPost): Promise<BlogPost> {
-    return await this.blogPostService.createPost(post);
+    return await this.blogPostService.create(post);
   }
 
   @Get()
   async get(): Promise<BlogPost[]> {
-    return await this.blogPostService.getPost();
+    return await this.blogPostService.findAll();
   }
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<BlogPost> {
     return await this.blogPostService.findOne(id);
   }
   @Get('categoryPosts/:category')
-  async byCategory(@Param('category') category: string): Promise<BlogPost[]> {
-    const cetegoryPosts = await this.blogPostService.byCategory(category);
+  async getbyCategory(
+    @Param('category') category: string,
+  ): Promise<BlogPost[]> {
+    const cetegoryPosts = await this.blogPostService.getbyCategory(category);
     console.log(cetegoryPosts);
     return cetegoryPosts;
   }
 
   @Patch(':id')
-  async update(
+  async updateOne(
     @Param('id') id: string,
     @Body() post: BlogPost,
   ): Promise<BlogPost> {
     const getpost = await this.blogPostService.getById(id);
     if (getpost) {
-      return await this.blogPostService.updatePost(id, post);
+      return await this.blogPostService.updateOne(id, post);
     } else {
       throw new NotFoundException('POST NOT FOUND');
     }
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<any> {
+  async deleteOne(@Param('id') id: string): Promise<any> {
     const getpost = await this.blogPostService.getById(id);
     if (getpost) {
-      return await this.blogPostService.deletePost(id);
+      return await this.blogPostService.deleteOne(id);
     } else {
       throw new NotFoundException('THERE IS NO SUVH POST YOU WANT TO DELETE');
     }
