@@ -32,7 +32,7 @@ export class BlogPostService {
     }
   }
 
-  async byCategory(category: string): Promise<any> {
+  async byCategory(category: string): Promise<BlogPost[]> {
     return await this.postModel.find({ category });
   }
 
