@@ -25,9 +25,9 @@ export class BlogPostController {
   async get(): Promise<BlogPost[]> {
     return await this.blogPostService.getPost();
   }
-  @Get(':slug')
-  async findOne(@Param('slug') slug: string): Promise<BlogPost> {
-    return await this.blogPostService.findOne(slug);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<BlogPost> {
+    return await this.blogPostService.findOne(id);
   }
   @Get('categoryPosts/:category')
   async byCategory(@Param('category') category: string): Promise<BlogPost[]> {
