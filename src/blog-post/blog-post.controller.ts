@@ -12,7 +12,9 @@ import {
 import { BlogPostService } from './blog-post.service';
 import { BlogPost } from './blog-schema';
 import * as fs from 'fs';
+import { ApiTags } from '@nestjs/swagger';
 
+ApiTags('blog-posts');
 @Controller('blog-posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
