@@ -17,8 +17,14 @@ export class BlogPostService {
     return await this.postModel.create(post);
   }
 
-  async findAll() {
-    return await this.postModel.find();
+  async find(query: BlogPost): Promise<postDocument[] | postDocument> {
+    if (query.category) {
+      return await this.postModel.find({ category: query.category });
+    } else if (query.id) {
+      return await this.postModel.findOne({ query });
+    } else {
+      return await this.postModel.find();
+    }
   }
 
   async updateOne(id: string, post: BlogPost): Promise<postDocument> {
@@ -32,15 +38,8 @@ export class BlogPostService {
     }
   }
 
-  async getbyCategory(category: string): Promise<BlogPost[]> {
-    return await this.postModel.find({ category });
-  }
-
   async getById(id: string): Promise<postDocument> {
     return await this.postModel.findById(id);
-  }
-  async findOne(id: string): Promise<postDocument> {
-    return await this.postModel.findOne({ _id: id });
   }
   async generateSlug(title: string): Promise<string> {
     // return await slugify(title.slice(1, 3) + join('-') + title);

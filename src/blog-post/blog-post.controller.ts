@@ -37,24 +37,9 @@ export class BlogPostController {
 
   @ApiProperty({ type: [BlogPost] })
   @Get()
-  async get(@Query('category') category: string): Promise<BlogPost[]> {
-    return await this.blogPostService.findAll();
-  }
-
-  @ApiProperty({ type: BlogPost })
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<BlogPost> {
-    return await this.blogPostService.findOne(id);
-  }
-
-  @ApiProperty({ type: [BlogPost] })
-  @Get('categoryPosts/:category')
-  async getbyCategory(
-    @Param('category') category: string,
-  ): Promise<BlogPost[]> {
-    const cetegoryPosts = await this.blogPostService.getbyCategory(category);
-    console.log(cetegoryPosts);
-    return cetegoryPosts;
+  async get(@Query() query: BlogPost): Promise<BlogPost[] | BlogPost> {
+    console.log(query.id);
+    return await this.blogPostService.find(query);
   }
 
   @ApiProperty({ type: BlogPost })

@@ -3,6 +3,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Schema({ timestamps: true })
 export class BlogPost {
+  @ApiProperty()
+  id: string;
+
   @ApiProperty({ type: String, description: 'The title of the Blog Post' })
   @Prop({ required: true })
   title: string;
