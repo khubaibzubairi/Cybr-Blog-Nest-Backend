@@ -3,23 +3,29 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Schema({ timestamps: true })
 export class BlogPost {
-  @ApiProperty()
+  @ApiProperty({ type: String, description: 'The title of the Blog Post' })
   @Prop({ required: true })
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, description: 'The Category of the Blog Post' })
   @Prop({ required: true })
   category: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    description: 'The Entire Story/Body of the Blog Post',
+  })
   @Prop({ required: true })
   body: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, description: 'The Image for a Blog Post' })
   @Prop({ required: true })
   image: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    description: 'The Slug Genereated from Ttile of the Blog Post',
+  })
   @Prop({ required: true })
   slug: string;
 }

@@ -7,12 +7,14 @@ async function bootstrap() {
   app.enableCors();
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
+    .setTitle('Travelerbies')
     .setDescription('The Blog API description')
-    .setVersion('1.0')
+    .setVersion('4.15.0')
     .addTag('blogs')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: true,
+  });
   SwaggerModule.setup('swagger-api', app, document);
 
   await app.listen(3000);

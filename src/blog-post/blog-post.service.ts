@@ -25,7 +25,7 @@ export class BlogPostService {
     return await this.postModel.findByIdAndUpdate(id, post, { new: true });
   }
 
-  async deleteOne(id: string) {
+  async deleteOne(id: string): Promise<unknown> {
     const currentPost = this.postModel.findById(id);
     if (currentPost) {
       return await this.postModel.deleteOne({ _id: (await currentPost).id });

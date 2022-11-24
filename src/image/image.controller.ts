@@ -6,10 +6,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { ImageService } from './image.service';
-
+@ApiSecurity('basic')
+@ApiTags('images')
 @Controller('images')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
@@ -30,6 +32,8 @@ export class ImageController {
       }),
     }),
   )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ description: 'Upload Image for Blog Post' })
   uploadImage(
     @UploadedFile()
     file: Express.Multer.File,
