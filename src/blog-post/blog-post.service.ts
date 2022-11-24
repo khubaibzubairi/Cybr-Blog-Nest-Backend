@@ -21,7 +21,7 @@ export class BlogPostService {
     if (query.category) {
       return await this.postModel.find({ category: query.category });
     } else if (query.id) {
-      return await this.postModel.findOne({ query });
+      return await this.postModel.findById({ _id: query.id });
     } else {
       return await this.postModel.find();
     }
