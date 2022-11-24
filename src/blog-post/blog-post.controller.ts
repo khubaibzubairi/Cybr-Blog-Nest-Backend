@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
 import { BlogPost } from './blog-schema';
@@ -36,7 +37,7 @@ export class BlogPostController {
 
   @ApiProperty({ type: [BlogPost] })
   @Get()
-  async get(): Promise<BlogPost[]> {
+  async get(@Query('category') category: string): Promise<BlogPost[]> {
     return await this.blogPostService.findAll();
   }
 
@@ -73,6 +74,7 @@ export class BlogPostController {
   @Delete(':id')
   async deleteOne(@Param('id') id: string): Promise<unknown> {
     const getpost = await this.blogPostService.getById(id);
+
     if (getpost) {
       const deletedpost = await this.blogPostService.deleteOne(id);
       console.log('Post with Id ' + id + ' is deleted');
@@ -81,6 +83,7 @@ export class BlogPostController {
       throw new NotFoundException('THERE IS NO SUVH POST YOU WANT TO DELETE');
     }
   }
+
   @Delete('server/:filename')
   async fromDiskStorage(@Param('filename') filename: string) {
     fs.unlink(`./assets/${filename}`, (error) => {
