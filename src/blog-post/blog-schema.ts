@@ -18,7 +18,7 @@ export class BlogPost {
     type: String,
     description: 'The Entire Story/Body of the Blog Post',
   })
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   body: string;
 
   @ApiProperty({ type: String, description: 'The Image for a Blog Post' })
@@ -37,5 +37,6 @@ export class BlogPost {
 }
 
 export const postSchema = SchemaFactory.createForClass(BlogPost);
+postSchema.index({ body: 'text' });
 
 export type postDocument = BlogPost & Document;
