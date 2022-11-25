@@ -56,6 +56,7 @@ export class BlogPostController {
     }
   }
 
+  @ApiProperty()
   @Delete(':id')
   async deleteOne(@Param('id') id: string): Promise<unknown> {
     const getpost = await this.blogPostService.getById(id);

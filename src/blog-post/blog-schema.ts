@@ -31,6 +31,9 @@ export class BlogPost {
   })
   @Prop({ required: true })
   slug: string;
+
+  @Prop()
+  text: string;
 }
 
 export const postSchema = SchemaFactory.createForClass(BlogPost);

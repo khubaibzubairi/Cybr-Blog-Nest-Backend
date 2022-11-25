@@ -22,6 +22,8 @@ export class BlogPostService {
       return await this.postModel.find({ category: query.category });
     } else if (query.id) {
       return await this.postModel.findById({ _id: query.id });
+    } else if (query.text) {
+      return await this.postModel.find({ $text: { $search: query.text } });
     } else {
       return await this.postModel.find();
     }
