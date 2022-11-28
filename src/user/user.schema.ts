@@ -36,6 +36,10 @@ export class User {
   @ApiProperty()
   @Prop({ required: true, default: Role.USER })
   role: Role[];
+
+  @ApiProperty()
+  @Prop()
+  refreshToken: string;
 }
 
 export const userSchema = SchemaFactory.createForClass(User);

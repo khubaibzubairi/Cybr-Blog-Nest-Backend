@@ -8,6 +8,8 @@ import { BlogPostModule } from './blog-post/blog-post.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PostsModule } from './image/posts/posts.module';
 import { ProfileModule } from './image/profile/profile.module';
+import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { ProfileModule } from './image/profile/profile.module';
     // ),
 
     AuthenticationModule,
+    UserModule,
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

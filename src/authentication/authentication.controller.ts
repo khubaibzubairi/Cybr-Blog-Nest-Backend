@@ -1,30 +1,47 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { User } from './user.schema';
+import { User, userDocument } from '../user/user.schema';
 import * as bcrypt from 'bcrypt';
+import { Request } from 'express';
+import { AccessTokenGuard } from 'src/guard/accessToken.guard';
+import { RefreshTokenGuard } from 'src/guard/refreshToken.guard';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
-  @Post()
-  async create(@Body() body: User): Promise<User> {
-    if (body.password === body.confirmpassword) {
-      const saltOrRounds = 10;
-      const password = body.password;
-      const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-      body.password = hashedPassword;
+  @Post('register')
+  async signUp(@Body() body: User): Promise<userDocument> {
+    return await this.authenticationService.signUp(body);
+  }
 
-      const confirmpassword = body.confirmpassword;
-      const hashedConfirmPassword = await bcrypt.hash(
-        confirmpassword,
-        saltOrRounds,
-      );
+  @Post('login')
+  async signIn(@Body() body: User) {
+    return await this.authenticationService.signIn(body);
+  }
 
-      body.confirmpassword = hashedConfirmPassword;
+  @UseGuards(AccessTokenGuard)
+  @Get('logout')
+  async logout(@Req() req: Request) {
+    const logged = await this.authenticationService.logout(req.user['sub']);
+    return {
+      msg: 'Logged Out User',
+      User: logged,
+    };
+  }
 
-      return await this.authenticationService.create(body);
-    } else {
-      throw new Error('Password does not Match');
-    }
+  @UseGuards(RefreshTokenGuard)
+  @Get('refresh')
+  async refreshToken(@Req() req: Request) {
+    const id = req.user['sub'];
+    const refreshToken = req.user['refreshToken'];
+    return await this.authenticationService.refreshToken(id, refreshToken);
   }
 }
