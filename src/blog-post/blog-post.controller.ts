@@ -38,7 +38,7 @@ export class BlogPostController {
   @ApiProperty({ type: [BlogPost] })
   @Get()
   async get(@Query() query: BlogPost): Promise<BlogPost[] | BlogPost> {
-    console.log(query.id);
+    console.log(query);
     return await this.blogPostService.find(query);
   }
 

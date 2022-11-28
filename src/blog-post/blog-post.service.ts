@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ImageController } from 'src/image/image.controller';
 import { BlogPost, postDocument } from './blog-schema';
 import slugify from 'slugify';
+import { PostsController } from 'src/image/posts/posts.controller';
 
 @Injectable()
 export class BlogPostService {
@@ -13,7 +13,7 @@ export class BlogPostService {
 
   async create(post: BlogPost): Promise<postDocument> {
     post.slug = await this.generateSlug(post.title);
-    post.image = ImageController.imagePath;
+    post.image = PostsController.imagePath;
     return await this.postModel.create(post);
   }
 

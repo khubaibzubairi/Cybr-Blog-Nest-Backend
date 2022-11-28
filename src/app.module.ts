@@ -5,16 +5,40 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BlogPostModule } from './blog-post/blog-post.module';
-import { ImageModule } from './image/image.module';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { PostsModule } from './image/posts/posts.module';
+import { ProfileModule } from './image/profile/profile.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://0.0.0.0:27017/cybr-blog'),
     BlogPostModule,
-    ImageModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'assets'),
-    }),
+
+    PostsModule,
+    ProfileModule,
+
+    ServeStaticModule.forRoot(
+      {
+        rootPath: join(__dirname, '..', 'assets/profile'),
+        // serveRoot: '/assets',
+      },
+      {
+        rootPath: join(__dirname, '..', 'assets/posts'),
+        // serveRoot: '/assets',
+      },
+    ),
+    // ServeStaticModule.forRoot(
+    //   // {
+    //   //   rootPath: join(__dirname, '..', 'assets/posts'),
+    //   //   // serveRoot: '/assets',
+    //   // },
+    //   {
+    //     rootPath: join(__dirname, '..', 'assets/profile'),
+    //     // serveRoot: '/assets',
+    //   },
+    // ),
+
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

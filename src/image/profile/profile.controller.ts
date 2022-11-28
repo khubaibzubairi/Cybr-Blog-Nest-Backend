@@ -2,26 +2,27 @@ import {
   Controller,
   Post,
   UploadedFile,
-  Request,
   UseInterceptors,
+  Request,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiBody } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { ImageService } from './image.service';
-@ApiSecurity('basic')
-@ApiTags('images')
-@Controller('images')
-export class ImageController {
-  constructor(private readonly imageService: ImageService) {}
+import { PostsController } from '../posts/posts.controller';
+import { ProfileService } from './profile.service';
+
+@Controller('profile')
+export class ProfileController {
+  constructor(private readonly profileService: ProfileService) {}
+
   static imagePath: string;
 
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './assets/',
+        destination: './assets/profile/',
         filename: (req, file, cb) => {
           const filename: string = Array(10)
             .fill(null)
@@ -39,7 +40,7 @@ export class ImageController {
     file: Express.Multer.File,
     @Request() req,
   ) {
-    ImageController.imagePath = `${file.filename}`;
-    return { url: ImageController.imagePath.toString(), type: file.mimetype };
+    ProfileController.imagePath = `${file.filename}`;
+    return { url: ProfileController.imagePath.toString(), type: file.mimetype };
   }
 }
