@@ -21,24 +21,14 @@ import { ConfigModule } from '@nestjs/config';
 
     ServeStaticModule.forRoot(
       {
-        rootPath: join(__dirname, '..', 'assets/profile'),
-        // serveRoot: '/assets',
+        rootPath: 'assets/posts',
+        renderPath: '/posts',
       },
       {
-        rootPath: join(__dirname, '..', 'assets/posts'),
-        // serveRoot: '/assets',
+        rootPath: 'assets/profile',
+        renderPath: '/profile',
       },
     ),
-    // ServeStaticModule.forRoot(
-    //   // {
-    //   //   rootPath: join(__dirname, '..', 'assets/posts'),
-    //   //   // serveRoot: '/assets',
-    //   // },
-    //   {
-    //     rootPath: join(__dirname, '..', 'assets/profile'),
-    //     // serveRoot: '/assets',
-    //   },
-    // ),
 
     AuthenticationModule,
     UserModule,
