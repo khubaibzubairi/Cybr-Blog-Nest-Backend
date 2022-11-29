@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   async create(body: User): Promise<userDocument> {
-    // body.image = ProfileController.imagePath;
+    body.image = ProfileController.imagePath;
     return await this.userModel.create(body);
   }
 

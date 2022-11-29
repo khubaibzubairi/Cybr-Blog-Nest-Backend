@@ -4,7 +4,6 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { User, userDocument } from '../user/user.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
-import { UserDto } from 'src/user/user.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -114,15 +113,11 @@ export class AuthenticationService {
       refreshToken,
     );
 
-    if (refreshTokenMatched) {
-      const token = await this.getToken(user._id, user.username);
-      await this.updateRefreshToken(user._id, token.refreshToken);
-      return {
-        msg: 'New Refreshed Token with 7 days Availability',
-        token: token,
-      };
-    } else {
-      throw new ForbiddenException('Acces Denied');
-    }
+    const token = await this.getToken(user._id, user.username);
+    await this.updateRefreshToken(user._id, token.refreshToken);
+    return {
+      msg: 'New Refreshed Token with 7 days Availability',
+      token: token,
+    };
   }
 }

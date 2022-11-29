@@ -30,7 +30,7 @@ export class User {
   confirmpassword: string;
 
   @ApiProperty()
-  @Prop({ required: true })
+  @Prop()
   image: string;
 
   @ApiProperty()
