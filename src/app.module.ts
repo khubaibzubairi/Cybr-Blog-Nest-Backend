@@ -21,11 +21,11 @@ import { ConfigModule } from '@nestjs/config';
 
     ServeStaticModule.forRoot(
       {
-        rootPath: 'assets/posts',
+        rootPath: join(__dirname, '..', 'assets/posts'),
         renderPath: '/posts',
       },
       {
-        rootPath: 'assets/profile',
+        rootPath: join(__dirname, '..', 'assets/profile'),
         renderPath: '/profile',
       },
     ),
