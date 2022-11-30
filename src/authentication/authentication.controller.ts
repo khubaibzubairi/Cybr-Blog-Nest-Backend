@@ -13,8 +13,9 @@ import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { RefreshTokenGuard } from 'src/guard/refreshToken.guard';
-import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './login.dto';
+import { RefTokenDto } from './refToken.dto';
 @ApiTags('Auth')
 @Controller('authentication')
 export class AuthenticationController {
@@ -41,6 +42,8 @@ export class AuthenticationController {
     };
   }
 
+  @ApiBearerAuth('JWT_Refresh')
+  @ApiProperty()
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   async refreshToken(@Req() req: Request) {

@@ -6,6 +6,7 @@ import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './login.dto';
+import { RefTokenDto } from './refToken.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -53,6 +54,7 @@ export class AuthenticationService {
         user._id,
         tokens.refreshToken,
       );
+      // return tokens;
       return {
         Tokens: tokens,
         HashedRefToken: hashedRefToken.refreshToken,
@@ -88,7 +90,7 @@ export class AuthenticationService {
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '15s',
+          expiresIn: '1m',
         },
       ),
       this.jwtservice.signAsync(
@@ -105,12 +107,12 @@ export class AuthenticationService {
     return { accessToken, refreshToken };
   }
 
-  async refreshToken(id: string, refreshToken: string) {
-    const user = await this.userService.findOneById(id);
+  async refreshToken(id: RefTokenDto, refreshToken: RefTokenDto) {
+    const user = await this.userService.findOneById(id.id);
     console.log('RefToken User', user);
 
     const refreshTokenMatched = await bcrypt.compare(
-      refreshToken,
+      refreshToken.refreshToken,
       user.refreshToken,
     );
     console.log('Token', refreshTokenMatched);
