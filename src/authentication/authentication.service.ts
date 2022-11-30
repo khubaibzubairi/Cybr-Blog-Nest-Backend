@@ -4,6 +4,8 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { User, userDocument } from '../user/user.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
+import { ApiTags } from '@nestjs/swagger';
+import { LoginDto } from './login.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -30,21 +32,15 @@ export class AuthenticationService {
 
       const newUser = await this.userService.create(body);
 
-      const tokens = await this.getToken(newUser._id, newUser.username);
-      console.log(typeof tokens);
-
-      await this.updateRefreshToken(newUser._id, tokens.refreshToken);
       return {
         user: newUser,
-        Tokens: tokens,
-        HashedRefToken: newUser.refreshToken,
       };
     } else {
       throw new Error('Password does not Match');
     }
   }
 
-  async signIn(data: User) {
+  async signIn(data: LoginDto): Promise<any> {
     const user = await this.userService.findOneByUserName(data.username);
     console.log(user);
 
@@ -52,10 +48,14 @@ export class AuthenticationService {
 
     if (matchPassword) {
       const tokens = await this.getToken(user._id, user.username);
-      await this.updateRefreshToken(user._id, tokens.refreshToken);
+
+      const hashedRefToken = await this.updateRefreshToken(
+        user._id,
+        tokens.refreshToken,
+      );
       return {
         Tokens: tokens,
-        HashedRefToken: user.refreshToken,
+        HashedRefToken: hashedRefToken.refreshToken,
       };
     } else {
       throw new Error('Access Denied');
@@ -88,7 +88,7 @@ export class AuthenticationService {
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '15m',
+          expiresIn: '15s',
         },
       ),
       this.jwtservice.signAsync(
@@ -107,17 +107,24 @@ export class AuthenticationService {
 
   async refreshToken(id: string, refreshToken: string) {
     const user = await this.userService.findOneById(id);
+    console.log('RefToken User', user);
 
     const refreshTokenMatched = await bcrypt.compare(
-      user.refreshToken,
       refreshToken,
+      user.refreshToken,
     );
+    console.log('Token', refreshTokenMatched);
 
-    const token = await this.getToken(user._id, user.username);
-    await this.updateRefreshToken(user._id, token.refreshToken);
-    return {
-      msg: 'New Refreshed Token with 7 days Availability',
-      token: token,
-    };
+    if (refreshTokenMatched) {
+      const token = await this.getToken(user._id, user.username);
+      console.log(token);
+      await this.updateRefreshToken(user._id, token.refreshToken);
+      return {
+        msg: 'New Refreshed Token with 7 days Availability',
+        token: token,
+      };
+    } else {
+      throw new Error('Access Denied');
+    }
   }
 }

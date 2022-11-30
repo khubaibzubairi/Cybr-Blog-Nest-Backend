@@ -13,6 +13,9 @@ import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { RefreshTokenGuard } from 'src/guard/refreshToken.guard';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { LoginDto } from './login.dto';
+@ApiTags('Auth')
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
@@ -22,8 +25,9 @@ export class AuthenticationController {
     return await this.authenticationService.signUp(body);
   }
 
+  @ApiProperty({ type: LoginDto })
   @Post('login')
-  async signIn(@Body() body: User) {
+  async signIn(@Body() body: LoginDto) {
     return await this.authenticationService.signIn(body);
   }
 
