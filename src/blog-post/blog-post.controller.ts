@@ -9,39 +9,51 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
 import { BlogPost } from './blog-schema';
 import * as fs from 'fs';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiProperty,
   ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
+import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 @ApiSecurity('basic')
 @ApiTags('blog-posts')
 @Controller('blog-posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
 
-  @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
-    type: BlogPost,
-  })
+  @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
+  @UseGuards(AccessTokenGuard)
   @Post()
-  async create(@Body() post: BlogPost): Promise<BlogPost> {
-    return await this.blogPostService.create(post);
+  async create(@Request() req, @Body() post: BlogPost): Promise<BlogPost> {
+    const user = req.user.user;
+    return await this.blogPostService.create(user, post);
   }
 
-  @ApiProperty({ type: [BlogPost] })
+  @ApiProperty()
+  @Get('all')
+  async findAll(): Promise<BlogPost[]> {
+    // console.log(query);
+    return await this.blogPostService.findAll();
+  }
+
+  @ApiProperty()
   @Get()
   async get(@Query() query: BlogPost): Promise<BlogPost[] | BlogPost> {
     console.log(query);
     return await this.blogPostService.find(query);
   }
 
+  @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
   @Patch(':id')
   async updateOne(

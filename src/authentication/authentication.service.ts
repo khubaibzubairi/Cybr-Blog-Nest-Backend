@@ -48,7 +48,7 @@ export class AuthenticationService {
     const matchPassword = await bcrypt.compare(data.password, user.password);
 
     if (matchPassword) {
-      const tokens = await this.getToken(user._id, user.username);
+      const tokens = await this.getToken(user._id, user);
 
       const hashedRefToken = await this.updateRefreshToken(
         user._id,
@@ -80,12 +80,12 @@ export class AuthenticationService {
     });
   }
 
-  async getToken(id: string, username: string) {
+  async getToken(id: string, user: userDocument) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtservice.signAsync(
         {
           sub: id,
-          username,
+          user,
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
@@ -95,7 +95,7 @@ export class AuthenticationService {
       this.jwtservice.signAsync(
         {
           sub: id,
-          username,
+          user,
         },
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
@@ -117,7 +117,7 @@ export class AuthenticationService {
     console.log('Token', refreshTokenMatched);
 
     if (refreshTokenMatched) {
-      const token = await this.getToken(user._id, user.username);
+      const token = await this.getToken(user._id, user);
       console.log(token);
       await this.updateRefreshToken(user._id, token.refreshToken);
       return {

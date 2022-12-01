@@ -44,7 +44,6 @@ export class AuthenticationController {
   }
 
   @ApiBearerAuth('JWT_Refresh')
-  // @ApiProperty({type:RefTokenDto})
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   async refreshToken(@Req() req: Request) {

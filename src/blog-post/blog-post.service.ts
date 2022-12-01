@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { BlogPost, postDocument } from './blog-schema';
 import slugify from 'slugify';
 import { PostsController } from 'src/image/posts/posts.controller';
+import { User } from 'src/user/user.schema';
 
 @Injectable()
 export class BlogPostService {
@@ -11,10 +12,15 @@ export class BlogPostService {
     @InjectModel(BlogPost.name) private postModel: Model<postDocument>,
   ) {}
 
-  async create(post: BlogPost): Promise<postDocument> {
+  async create(author: User, post: BlogPost): Promise<postDocument> {
     post.slug = await this.generateSlug(post.title);
-    post.image = PostsController.imagePath;
+    post.author = author;
+    // post.image = PostsController.imagePath;
     return await this.postModel.create(post);
+  }
+
+  async findAll(): Promise<postDocument[]> {
+    return await this.postModel.find();
   }
 
   async find(query: BlogPost): Promise<postDocument[] | postDocument> {

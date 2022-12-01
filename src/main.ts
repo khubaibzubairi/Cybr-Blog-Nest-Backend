@@ -13,7 +13,7 @@ async function bootstrap() {
     .setDescription('The Blog API description')
     .setVersion('4.15.0')
     .addBearerAuth(undefined, 'JWT_Refresh')
-    .addBearerAuth(undefined,'Jwt_Token')
+    .addBearerAuth(undefined, 'Jwt_Token')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
