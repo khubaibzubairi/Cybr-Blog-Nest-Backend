@@ -33,6 +33,7 @@ export class AuthenticationController {
   }
 
   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth('Jwt_Token')
   @Get('logout')
   async logout(@Req() req: Request) {
     const logged = await this.authenticationService.logout(req.user['sub']);
@@ -43,7 +44,7 @@ export class AuthenticationController {
   }
 
   @ApiBearerAuth('JWT_Refresh')
-  @ApiProperty()
+  // @ApiProperty({type:RefTokenDto})
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   async refreshToken(@Req() req: Request) {
