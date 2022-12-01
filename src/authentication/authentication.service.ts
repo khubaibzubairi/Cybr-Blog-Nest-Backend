@@ -48,7 +48,7 @@ export class AuthenticationService {
     const matchPassword = await bcrypt.compare(data.password, user.password);
 
     if (matchPassword) {
-      const tokens = await this.getToken(user._id, user);
+      const tokens = await this.getToken(user);
 
       const hashedRefToken = await this.updateRefreshToken(
         user._id,
@@ -64,7 +64,7 @@ export class AuthenticationService {
   }
 
   async logout(id: string) {
-    return await this.userService.update(id, { refreshToken: null });
+    return await this.userService.updateRefToken(id, { refreshToken: null });
   }
 
   async hashToken(token: string) {
@@ -75,31 +75,31 @@ export class AuthenticationService {
   async updateRefreshToken(id: string, refreshToken: string) {
     const hashedRefreshToken = await this.hashToken(refreshToken);
 
-    return await this.userService.update(id, {
+    return await this.userService.updateRefToken(id, {
       refreshToken: hashedRefreshToken,
     });
   }
 
-  async getToken(id: string, user: userDocument) {
+  async getToken(user: userDocument) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtservice.signAsync(
         {
-          sub: id,
+          // sub: id,
           user,
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '1m',
+          expiresIn: '10m',
         },
       ),
       this.jwtservice.signAsync(
         {
-          sub: id,
+          // sub: id,
           user,
         },
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-          expiresIn: '7d',
+          expiresIn: '25d',
         },
       ),
     ]);
@@ -117,7 +117,7 @@ export class AuthenticationService {
     console.log('Token', refreshTokenMatched);
 
     if (refreshTokenMatched) {
-      const token = await this.getToken(user._id, user);
+      const token = await this.getToken(user);
       console.log(token);
       await this.updateRefreshToken(user._id, token.refreshToken);
       return {

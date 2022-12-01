@@ -12,7 +12,9 @@ import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from './user.dto';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
-
+import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { UserGuard } from 'src/guard/user.guard';
+@ApiTags('User')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -27,9 +29,23 @@ export class UserController {
     return await this.userService.findOneByUserName(username);
   }
 
+  @ApiBearerAuth('Jwt_Token')
+  @ApiProperty({ type: User })
+  @UseGuards(AccessTokenGuard, UserGuard)
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() body: User,
+  ): Promise<userDocument> {
+    const updated = await this.userService.update(id, body);
+    console.log(updated);
+
+    return updated;
+  }
+
   @UseGuards(AccessTokenGuard)
   @Patch()
-  async update(@Param('id') id: string, @Body('body') body: UserDto) {
-    return await this.userService.update(id, body);
+  async updateRefToken(@Param('id') id: string, @Body('body') body: UserDto) {
+    return await this.userService.updateRefToken(id, body);
   }
 }

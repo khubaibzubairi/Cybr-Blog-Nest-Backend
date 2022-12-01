@@ -24,7 +24,11 @@ export class UserService {
     return await this.userModel.findById({ _id: id });
   }
 
-  async update(id: string, body: UserDto): Promise<userDocument> {
+  async update(id: string, body: User): Promise<userDocument> {
+    return await this.userModel.findByIdAndUpdate(id, body, { new: true });
+  }
+
+  async updateRefToken(id: string, body: UserDto): Promise<userDocument> {
     return await this.userModel.findByIdAndUpdate(id, body, { new: true });
   }
 }

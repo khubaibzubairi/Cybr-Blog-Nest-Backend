@@ -3,10 +3,12 @@ import {
   ExecutionContext,
   SetMetadata,
 } from '@nestjs/common';
+import { User } from 'src/user/user.schema';
 
 export const UserDec = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
+  (data: User, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return request.user;
+    data = request.user;
+    return data;
   },
 );

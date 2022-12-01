@@ -23,6 +23,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
+import { UserDec } from 'src/decorator/user/user.decorator';
+import { User, userDocument } from 'src/user/user.schema';
 @ApiSecurity('basic')
 @ApiTags('blog-posts')
 @Controller('blog-posts')
@@ -52,9 +54,9 @@ export class BlogPostController {
     return await this.blogPostService.find(query);
   }
 
-  @UseGuards(AccessTokenGuard)
   @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
+  @UseGuards(AccessTokenGuard)
   @Patch(':id')
   async updateOne(
     @Param('id') id: string,

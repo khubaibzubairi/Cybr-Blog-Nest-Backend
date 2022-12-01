@@ -10,6 +10,8 @@ export enum Role {
 
 @Schema({ timestamps: true })
 export class User {
+  _id: string;
+
   @ApiProperty()
   @Prop({ required: true })
   firstname: string;
