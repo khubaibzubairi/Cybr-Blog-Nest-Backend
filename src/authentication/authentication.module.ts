@@ -6,7 +6,6 @@ import { AuthenticationController } from './authentication.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { RefreshTokenStrategy } from './startegies/refreshToken.strategy';
 import { UserModule } from 'src/user/user.module';
-import { UserService } from 'src/user/user.service';
 
 @Module({
   imports: [
