@@ -21,6 +21,7 @@ import { RefTokenDto } from './refToken.dto';
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
+  @ApiProperty()
   @Post('register')
   async signUp(@Body() body: User): Promise<userDocument> {
     return await this.authenticationService.signUp(body);

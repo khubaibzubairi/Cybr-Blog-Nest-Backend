@@ -13,7 +13,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
-import { BlogPost } from './blog-schema';
+import { BlogPost, postDocument } from './blog-schema';
 import * as fs from 'fs';
 import {
   ApiBearerAuth,
@@ -25,6 +25,7 @@ import {
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { UserDec } from 'src/decorator/user/user.decorator';
 import { User, userDocument } from 'src/user/user.schema';
+import { UserGuard } from 'src/guard/user.guard';
 @ApiSecurity('basic')
 @ApiTags('blog-posts')
 @Controller('blog-posts')
@@ -45,6 +46,14 @@ export class BlogPostController {
   async findAll(): Promise<BlogPost[]> {
     // console.log(query);
     return await this.blogPostService.findAll();
+  }
+
+  @ApiProperty()
+  @UseGuards(AccessTokenGuard, UserGuard)
+  @Get(':author')
+  async findByAuthor(@Param('author') author: string): Promise<postDocument[]> {
+    const posts = await this.blogPostService.findByAuthor(author);
+    return posts;
   }
 
   @ApiProperty()

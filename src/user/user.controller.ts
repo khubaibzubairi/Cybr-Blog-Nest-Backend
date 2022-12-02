@@ -19,6 +19,7 @@ import { UserGuard } from 'src/guard/user.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiProperty({ type: User })
   @Post()
   async create(@Body() body: User): Promise<User> {
     return await this.userService.create(body);

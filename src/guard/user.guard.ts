@@ -10,12 +10,18 @@ export class UserGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     const params = request.params;
+    console.log('Params', params);
 
     const user: User = request.user.user;
 
     const dbUser: User = await this.service.findOneById(user._id);
+    console.log('DB', dbUser.firstname);
+    console.log(params.id);
+    console.log(user._id);
+    console.log(dbUser._id);
+
     let hasPermission: boolean = false;
-    if (dbUser._id == params.id) {
+    if (dbUser._id == params.id || dbUser.firstname == params.author) {
       hasPermission = true;
       return user && hasPermission;
     } else {
