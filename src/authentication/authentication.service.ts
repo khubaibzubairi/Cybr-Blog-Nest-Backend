@@ -48,7 +48,7 @@ export class AuthenticationService {
     const matchPassword = await bcrypt.compare(data.password, user.password);
 
     if (matchPassword) {
-      const tokens = await this.getToken(user);
+      const tokens = await this.getToken(user.id, user);
 
       const hashedRefToken = await this.updateRefreshToken(
         user._id,
@@ -80,21 +80,21 @@ export class AuthenticationService {
     });
   }
 
-  async getToken(user: userDocument) {
+  async getToken(id: string, user: userDocument) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtservice.signAsync(
         {
-          // sub: id,
+          sub: id,
           user,
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '5m',
+          expiresIn: '15s',
         },
       ),
       this.jwtservice.signAsync(
         {
-          // sub: id,
+          sub: id,
           user,
         },
         {
@@ -117,11 +117,11 @@ export class AuthenticationService {
     console.log('Token', refreshTokenMatched);
 
     if (refreshTokenMatched) {
-      const token = await this.getToken(user);
+      const token = await this.getToken(user._id, user);
       console.log(token);
       await this.updateRefreshToken(user._id, token.refreshToken);
       return {
-        msg: 'New Refreshed Token with 7 days Availability',
+        msg: 'New Refreshed Token with 25 days Availability',
         token: token,
       };
     } else {
