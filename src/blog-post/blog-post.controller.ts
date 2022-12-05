@@ -34,7 +34,7 @@ export class BlogPostController {
 
   @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Post()
   async create(@Request() req, @Body() post: BlogPost): Promise<BlogPost> {
     const user = req.user.user;
@@ -65,7 +65,7 @@ export class BlogPostController {
 
   @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Patch(':id')
   async updateOne(
     @Param('id') id: string,
