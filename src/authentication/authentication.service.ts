@@ -80,22 +80,22 @@ export class AuthenticationService {
     });
   }
 
-  async getToken(id: string, user: userDocument) {
+  async getToken(id: string, user: User) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtservice.signAsync(
         {
           sub: id,
-          user,
+          user: user._id,
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '2m',
+          expiresIn: '5m',
         },
       ),
       this.jwtservice.signAsync(
         {
           sub: id,
-          user,
+          user: user._id,
         },
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import mongoose from 'mongoose';
 import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
@@ -26,15 +27,11 @@ export class BlogPost {
   @Prop({ required: true })
   image: string;
 
-  // @ApiProperty({
-  //   type: String,
-  //   description: 'The Slug Genereated from Ttile of the Blog Post',
-  // })
   @Prop({ required: true })
   slug: string;
 
   @ApiProperty({ required: true })
-  @Prop()
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
   author: User;
 
   @Prop()

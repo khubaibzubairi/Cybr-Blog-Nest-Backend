@@ -34,10 +34,11 @@ export class BlogPostController {
 
   @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
-  @UseGuards(AccessTokenGuard, UserGuard)
+  @UseGuards(AccessTokenGuard)
   @Post()
   async create(@Request() req, @Body() post: BlogPost): Promise<BlogPost> {
     const user = req.user.user;
+    // if(req.user.user._id){}
     return await this.blogPostService.create(user, post);
   }
 
