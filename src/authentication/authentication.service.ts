@@ -121,8 +121,8 @@ export class AuthenticationService {
       console.log(token);
       await this.updateRefreshToken(user._id, token.refreshToken);
       return {
+        Tokens: token,
         msg: 'New Refreshed Token with 25 days Availability',
-        token: token,
       };
     } else {
       throw new Error('Access Denied');
