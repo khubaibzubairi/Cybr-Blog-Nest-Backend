@@ -1,8 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { RefTokenDto } from './authentication/refToken.dto';
-import { User } from './user/user.schema';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,24 +15,6 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-
-  // const options = {
-  //   swaggerOptions: {
-  //     authAction: {
-  //       defaultBearerAuth: {
-  //         name: 'WT_Refresh',
-  //         schema: {
-  //           description: 'Default',
-  //           type: 'http',
-  //           in: 'header',
-  //           scheme: 'bearer',
-  //           bearerFormat: 'JWT',
-  //         },
-  //         value: token.refreshToken,
-  //       },
-  //     },
-  //   },
-  // };
 
   SwaggerModule.setup('swagger-ui', app, document);
 

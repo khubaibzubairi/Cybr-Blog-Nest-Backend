@@ -2,7 +2,7 @@ import { forwardRef, Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, userSchema } from './user.schema';
+import { User, userSchema } from '../schema/user.schema';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
 
 @Module({

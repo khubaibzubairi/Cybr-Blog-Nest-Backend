@@ -8,14 +8,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { User, userDocument } from '../user/user.schema';
+import { User, userDocument } from '../schema/user.schema';
 import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { RefreshTokenGuard } from 'src/guard/refreshToken.guard';
 import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { LoginDto } from './login.dto';
-import { RefTokenDto } from './refToken.dto';
+import { LoginDto } from '../dto/login.dto';
+
 @ApiTags('Auth')
 @Controller('authentication')
 export class AuthenticationController {

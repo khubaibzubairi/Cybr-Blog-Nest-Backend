@@ -7,10 +7,9 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { User, userDocument } from './user.schema';
+import { User, userDocument } from '../schema/user.schema';
 import { UserService } from './user.service';
-import * as bcrypt from 'bcrypt';
-import { UserDto } from './user.dto';
+import { Update_RefToken_UserDto } from '../dto/updateRefToken.dto';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { UserGuard } from 'src/guard/user.guard';
@@ -52,7 +51,10 @@ export class UserController {
 
   @UseGuards(AccessTokenGuard)
   @Patch()
-  async updateRefToken(@Param('id') id: string, @Body('body') body: UserDto) {
+  async updateRefToken(
+    @Param('id') id: string,
+    @Body('body') body: Update_RefToken_UserDto,
+  ) {
     return await this.userService.updateRefToken(id, body);
   }
 }

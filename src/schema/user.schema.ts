@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document } from 'mongoose';
-import { BlogPost } from 'src/blog-post/blog-schema';
+import { BlogPost } from 'src/schema/blog-schema';
 
 export enum Role {
   USER = 0,

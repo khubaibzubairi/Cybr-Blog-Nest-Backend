@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ProfileController } from 'src/image/profile/profile.controller';
-import { UserDto } from './user.dto';
-import { User, userDocument } from './user.schema';
+import { Update_RefToken_UserDto } from '../dto/updateRefToken.dto';
+import { User, userDocument } from '../schema/user.schema';
 
 @Injectable()
 export class UserService {
@@ -28,7 +28,10 @@ export class UserService {
     return await this.userModel.findByIdAndUpdate(id, body, { new: true });
   }
 
-  async updateRefToken(id: string, body: UserDto): Promise<userDocument> {
+  async updateRefToken(
+    id: string,
+    body: Update_RefToken_UserDto,
+  ): Promise<userDocument> {
     return await this.userModel.findByIdAndUpdate(id, body, { new: true });
   }
 }

@@ -13,7 +13,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
-import { BlogPost, postDocument } from './blog-schema';
+import { BlogPost, postDocument } from '../schema/blog-schema';
 import * as fs from 'fs';
 import {
   ApiBearerAuth,
@@ -24,7 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { UserDec } from 'src/decorator/user/user.decorator';
-import { User, userDocument } from 'src/user/user.schema';
+import { User, userDocument } from 'src/schema/user.schema';
 import { UserGuard } from 'src/guard/user.guard';
 @ApiSecurity('basic')
 @ApiTags('blog-posts')

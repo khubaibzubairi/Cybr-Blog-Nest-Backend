@@ -1,19 +1,17 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { User, userDocument } from '../user/user.schema';
+import { Injectable } from '@nestjs/common';
+import { User, userDocument } from '../schema/user.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
-import { ApiTags } from '@nestjs/swagger';
-import { LoginDto } from './login.dto';
-import { RefTokenDto } from './refToken.dto';
+import { LoginDto } from '../dto/login.dto';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private jwtservice: JwtService,
-    private configService: ConfigService,
-    private userService: UserService,
+    private readonly jwtservice: JwtService,
+    private readonly configService: ConfigService,
+    private readonly userService: UserService,
   ) {}
 
   async signUp(body: User): Promise<userDocument | any> {

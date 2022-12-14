@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose from 'mongoose';
-import { User } from 'src/user/user.schema';
+import { User } from 'src/schema/user.schema';
 
 @Schema({ timestamps: true })
 export class BlogPost {

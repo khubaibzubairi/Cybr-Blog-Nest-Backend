@@ -3,7 +3,7 @@ import {
   ExecutionContext,
   SetMetadata,
 } from '@nestjs/common';
-import { User } from 'src/user/user.schema';
+import { User } from 'src/schema/user.schema';
 
 export const UserDec = createParamDecorator(
   (data: User, ctx: ExecutionContext) => {
