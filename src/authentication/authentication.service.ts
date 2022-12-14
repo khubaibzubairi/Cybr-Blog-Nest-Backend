@@ -99,7 +99,7 @@ export class AuthenticationService {
         },
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-          expiresIn: '25d',
+          expiresIn: '5m',
         },
       ),
     ]);
