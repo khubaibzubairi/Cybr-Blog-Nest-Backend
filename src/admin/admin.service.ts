@@ -4,14 +4,15 @@ import { Model } from 'mongoose';
 import { AdminDto } from 'src/dto/admin.dto';
 import { Update_RefToken_AdminDto } from 'src/dto/updateRefToken.dto';
 import { Admin, adminDocument } from 'src/schema/admin.schema';
+import { User, userDocument } from 'src/schema/user.schema';
 
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectModel(Admin.name) private readonly adminModel: Model<adminDocument>,
+    @InjectModel(User.name) private readonly adminModel: Model<userDocument>,
   ) {}
 
-  async create(body: AdminDto): Promise<adminDocument> {
+  async create(body: AdminDto): Promise<userDocument> {
     return await this.adminModel.create(body);
   }
 

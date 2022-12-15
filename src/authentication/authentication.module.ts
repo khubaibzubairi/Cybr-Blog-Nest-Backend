@@ -10,7 +10,8 @@ import { AdminAuthModule } from 'src/authentication/adminAuth/admin.auth.module'
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),
+    // forwardRef(() => UserModule),
+    UserModule,
 
     JwtModule.register({}),
     ConfigModule.forRoot(),

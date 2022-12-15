@@ -7,7 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AdminModule, JwtModule.register({}), ConfigModule.forRoot()],
+  imports: [JwtModule.register({}), ConfigModule.forRoot()],
   controllers: [AdminAuthController],
   providers: [AdminAuthService],
   exports: [AdminAuthService],
