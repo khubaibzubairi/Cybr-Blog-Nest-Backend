@@ -11,7 +11,7 @@ import { AdminService } from 'src/admin/admin.service';
   imports: [
     // forwardRef(() => AuthenticationModule),
     forwardRef(() => {
-      AdminModule;
+      return AdminModule;
     }),
     MongooseModule.forFeature([
       {
@@ -22,6 +22,14 @@ import { AdminService } from 'src/admin/admin.service';
   ],
   controllers: [UserController],
   providers: [UserService, AdminService],
-  exports: [UserService],
+  exports: [
+    UserService,
+    MongooseModule.forFeature([
+      {
+        name: User.name,
+        schema: userSchema,
+      },
+    ]),
+  ],
 })
 export class UserModule {}

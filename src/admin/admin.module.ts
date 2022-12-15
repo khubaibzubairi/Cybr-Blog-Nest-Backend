@@ -10,15 +10,8 @@ import { UserService } from 'src/user/user.service';
 @Module({
   imports: [
     forwardRef(() => {
-      UserModule;
+      return UserModule;
     }),
-    // UserModule,
-    // MongooseModule.forFeature([
-    //   {
-    //     name: Admin.name,
-    //     schema: adminSchema,
-    //   },
-    // ]),
   ],
   controllers: [AdminController],
   providers: [AdminService, UserService],

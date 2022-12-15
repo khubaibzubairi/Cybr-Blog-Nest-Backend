@@ -5,17 +5,26 @@ export class AdminDto {
   _id: string;
 
   @ApiProperty()
-  name!: string;
+  firstname: string;
 
   @ApiProperty()
-  username!: string;
+  lastname: string;
 
   @ApiProperty()
-  password!: string;
+  username: string;
+
+  @ApiProperty()
+  password: string;
+
+  @ApiProperty()
+  confirmpassword: string;
 
   @ApiProperty()
   image!: string;
 
   @ApiProperty({ default: Role.ADMIN })
   role!: Role[];
+
+  @ApiProperty()
+  refreshToken: string;
 }

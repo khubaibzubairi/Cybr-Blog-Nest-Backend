@@ -12,22 +12,22 @@ export class AdminService {
     @InjectModel(User.name) private readonly adminModel: Model<userDocument>,
   ) {}
 
-  async create(body: AdminDto): Promise<userDocument> {
+  async create(body: Admin): Promise<userDocument> {
     return await this.adminModel.create(body);
   }
 
-  async findByUsername(username: string): Promise<adminDocument> {
+  async findByUsername(username: string): Promise<userDocument> {
     return await this.adminModel.findOne({ username: username });
   }
 
-  async findOneById(id: string): Promise<adminDocument> {
+  async findOneById(id: string): Promise<userDocument> {
     return await this.adminModel.findById({ _id: id });
   }
 
   async updateRefToken(
     id: string,
     body: Update_RefToken_AdminDto,
-  ): Promise<adminDocument> {
+  ): Promise<userDocument> {
     return await this.adminModel.findByIdAndUpdate(id, body, { new: true });
   }
 }

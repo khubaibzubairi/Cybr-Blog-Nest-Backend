@@ -8,23 +8,31 @@ Document;
 export class Admin {
   _id: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @Prop({ required: true })
-  name: string;
+  firstname: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
+  @Prop({ required: true })
+  lastname: string;
+
+  @ApiProperty()
   @Prop({ required: true })
   username: string;
 
-  @ApiProperty({ required: true })
-  @Prop({ required: true })
+  @ApiProperty()
+  @Prop({ required: true, unique: true })
   password: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @Prop({ required: true })
+  confirmpassword: string;
+
+  @ApiProperty()
+  @Prop()
   image: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @Prop({ required: true, default: Role.ADMIN })
   role: Role[];
 
