@@ -71,4 +71,9 @@ export class UserController {
     console.log(updated);
     return updated;
   }
+
+  @Patch('banUser/:id')
+  async banUser(@Param('id') id: string): Promise<userDocument> {
+    return await this.userService.banUser(id);
+  }
 }

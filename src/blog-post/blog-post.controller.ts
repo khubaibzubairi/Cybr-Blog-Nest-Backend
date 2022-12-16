@@ -26,7 +26,8 @@ import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { UserDec } from 'src/decorator/user/user.decorator';
 import { User, userDocument } from 'src/schema/user.schema';
 import { UserGuard } from 'src/guard/user.guard';
-@ApiSecurity('basic')
+import { Cron } from '@nestjs/schedule';
+// @ApiSecurity('basic')
 @ApiTags('blog-posts')
 @Controller('blog-posts')
 export class BlogPostController {

@@ -10,6 +10,7 @@ import { PostsModule } from './image/posts/posts.module';
 import { ProfileModule } from './image/profile/profile.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthenticationModule,
     UserModule,
     ConfigModule.forRoot(),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

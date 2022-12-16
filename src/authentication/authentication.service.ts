@@ -5,6 +5,7 @@ import { User, userDocument } from '../schema/user.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../dto/login.dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class AuthenticationService {
@@ -39,6 +40,10 @@ export class AuthenticationService {
     }
   }
 
+  // @Cron(CronExpression.EVERY_5_SECONDS)
+  // cronlog() {
+  //   console.log('TASK SCHEDULING WORKING');
+  // }
   async signIn(data: LoginDto): Promise<any> {
     const user = await this.userService.findOneByUserName(data.username);
     console.log(user);

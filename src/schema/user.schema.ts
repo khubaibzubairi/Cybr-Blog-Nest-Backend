@@ -6,6 +6,7 @@ import { BlogPost } from 'src/schema/blog.schema';
 export enum Role {
   USER = 0,
   ADMIN = 1,
+  BAN = 2,
 }
 
 @Schema({ timestamps: true })
