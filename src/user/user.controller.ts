@@ -57,4 +57,18 @@ export class UserController {
   ) {
     return await this.userService.updateRefToken(id, body);
   }
+
+  @Patch('makeadmin/:id')
+  async makeAdmin(@Param('id') id: string): Promise<userDocument> {
+    let updated = await this.userService.makeAdmin(id);
+    console.log(updated);
+    return updated;
+  }
+
+  @Patch('dismissAsAdmin/:id')
+  async dismissAsAdmin(@Param('id') id: string): Promise<userDocument> {
+    let updated = await this.userService.dismissAsAdmin(id);
+    console.log(updated);
+    return updated;
+  }
 }

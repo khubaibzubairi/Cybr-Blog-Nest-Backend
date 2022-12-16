@@ -10,8 +10,6 @@ import { PostsModule } from './image/posts/posts.module';
 import { ProfileModule } from './image/profile/profile.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import { AdminModule } from './admin/admin.module';
-import { AdminAuthModule } from './authentication/adminAuth/admin.auth.module';
 
 @Module({
   imports: [
@@ -35,8 +33,6 @@ import { AdminAuthModule } from './authentication/adminAuth/admin.auth.module';
     AuthenticationModule,
     UserModule,
     ConfigModule.forRoot(),
-    AdminModule,
-    AdminAuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

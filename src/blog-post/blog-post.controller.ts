@@ -13,7 +13,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
-import { BlogPost, postDocument } from '../schema/blog-schema';
+import { BlogPost, postDocument } from '../schema/blog.schema';
 import * as fs from 'fs';
 import {
   ApiBearerAuth,

@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document } from 'mongoose';
-import { BlogPost } from 'src/schema/blog-schema';
+import { BlogPost } from 'src/schema/blog.schema';
 
 export enum Role {
   USER = 0,
@@ -36,7 +36,7 @@ export class User {
   @Prop()
   image: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true, default: Role.USER })
   @Prop({ required: true, default: Role.USER })
   role: Role[];
 
