@@ -7,6 +7,8 @@ export class UserGuard implements CanActivate {
   constructor(private readonly service: UserService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    let hasPermission: boolean = false;
+
     const request = context.switchToHttp().getRequest();
 
     const params = request.params;
@@ -15,13 +17,12 @@ export class UserGuard implements CanActivate {
     const user: User = request.user.user;
 
     const dbUser: User = await this.service.findOneById(user._id);
-    console.log('DB', dbUser.firstname);
-    console.log(params.id);
-    console.log(user._id);
-    console.log(dbUser._id);
 
-    let hasPermission: boolean = false;
-    if (dbUser._id == params.id || dbUser.firstname == params.author) {
+    if (
+      dbUser._id == params.id ||
+      dbUser.firstname == params.author ||
+      dbUser.role[0] == 1
+    ) {
       hasPermission = true;
       return user && hasPermission;
     } else {

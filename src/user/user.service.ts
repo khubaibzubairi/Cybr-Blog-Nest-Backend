@@ -19,6 +19,10 @@ export class UserService {
     return await this.userModel.create(body);
   }
 
+  async findAll(): Promise<userDocument[]> {
+    return await this.userModel.find();
+  }
+
   async findOneByUserName(username: string): Promise<userDocument> {
     return await this.userModel.findOne({ username: username });
   }
@@ -87,6 +91,8 @@ export class UserService {
 
     this.scheduler.addCronJob('name', job);
     job.start();
+
+    console.log('JOB ', job);
 
     setTimeout(() => {
       job.stop();

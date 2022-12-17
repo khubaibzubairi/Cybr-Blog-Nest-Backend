@@ -18,10 +18,16 @@ import { UserGuard } from 'src/guard/user.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiProperty({ type: User })
-  @Post()
-  async create(@Body() body: User): Promise<User> {
-    return await this.userService.create(body);
+  // @ApiProperty({ type: User })
+  // @Post()
+  // async create(@Body() body: User): Promise<User> {
+  //   return await this.userService.create(body);
+  // }
+
+  @UseGuards(AccessTokenGuard)
+  @Get()
+  async findAll(): Promise<userDocument[]> {
+    return await this.userService.findAll();
   }
 
   @Get(':username')
@@ -58,6 +64,7 @@ export class UserController {
     return await this.userService.updateRefToken(id, body);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch('makeadmin/:id')
   async makeAdmin(@Param('id') id: string): Promise<userDocument> {
     let updated = await this.userService.makeAdmin(id);
@@ -65,6 +72,7 @@ export class UserController {
     return updated;
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch('dismissAsAdmin/:id')
   async dismissAsAdmin(@Param('id') id: string): Promise<userDocument> {
     let updated = await this.userService.dismissAsAdmin(id);
@@ -72,6 +80,7 @@ export class UserController {
     return updated;
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch('banUser/:id')
   async banUser(@Param('id') id: string): Promise<userDocument> {
     return await this.userService.banUser(id);

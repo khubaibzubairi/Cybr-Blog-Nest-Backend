@@ -82,6 +82,7 @@ export class BlogPostController {
   }
 
   @ApiProperty()
+  @UseGuards(AccessTokenGuard)
   @Delete(':id')
   async deleteOne(@Param('id') id: string): Promise<unknown> {
     const getpost = await this.blogPostService.getById(id);
