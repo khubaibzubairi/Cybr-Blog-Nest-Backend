@@ -7,19 +7,22 @@ import { User } from 'src/schema/user.schema';
 
 @Injectable()
 export class BlogPostService {
+  static u: User;
+
   constructor(
     @InjectModel(BlogPost.name) private postModel: Model<postDocument>,
   ) {}
-
   async create(author: User, post: BlogPost): Promise<postDocument> {
     post.slug = await this.generateSlug(post.title);
     post.author = author;
+    BlogPostService.u = author;
+
     // post.image = PostsController.imagePath;
     return await this.postModel.create(post);
   }
 
-  async count():Promise<number>{
-    return await this.postModel.count()
+  async count(): Promise<number> {
+    return await this.postModel.count();
   }
 
   async findAll(): Promise<postDocument[]> {

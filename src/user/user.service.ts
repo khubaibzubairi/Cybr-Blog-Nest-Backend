@@ -81,22 +81,23 @@ export class UserService {
 
     console.log('Baned User', banned);
 
-    const job = new CronJob(CronExpression.EVERY_10_SECONDS, async () => {
-      let user: User = await this.userModel.findById({ _id: id });
+    const job: CronJob = new CronJob(
+      CronExpression.EVERY_10_SECONDS,
+      async () => {
+        let user: User = await this.userModel.findById({ _id: id });
 
-      user.isActive = true;
+        user.isActive = true;
 
-      banRemoved = await this.userModel.findByIdAndUpdate(user._id, user, {
-        new: true,
-      });
+        banRemoved = await this.userModel.findByIdAndUpdate(user._id, user, {
+          new: true,
+        });
 
-      console.log('Revoked', banRemoved);
-    });
+        console.log('Revoked', banRemoved);
+      },
+    );
 
     this.scheduler.addCronJob('name', job);
     job.start();
-
-    console.log('JOB ', job);
 
     setTimeout(() => {
       job.stop();

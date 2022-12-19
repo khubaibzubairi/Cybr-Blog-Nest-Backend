@@ -1,3 +1,4 @@
+import { JwtTokens } from './../dto/toknes.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
@@ -5,12 +6,11 @@ import { User, userDocument } from '../schema/user.schema';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../dto/login.dto';
-import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private readonly jwtservice: JwtService,
+    private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
   ) {}
@@ -40,10 +40,8 @@ export class AuthenticationService {
     }
   }
 
-  // @Cron(CronExpression.EVERY_5_SECONDS)
-  // cronlog() {
-  //   console.log('TASK SCHEDULING WORKING');
-  // }
+  static jwtToken: JwtTokens;
+
   async signIn(data: LoginDto): Promise<any> {
     const user = await this.userService.findOneByUserName(data.username);
     console.log(user);
@@ -52,10 +50,11 @@ export class AuthenticationService {
 
     if (matchPassword) {
       const tokens = await this.getToken(user.id, user);
+      AuthenticationService.jwtToken = tokens;
 
       const hashedRefToken = await this.updateRefreshToken(
         user._id,
-        tokens.refreshToken,
+        tokens.accessToken,
       );
       return {
         Tokens: tokens,
@@ -85,7 +84,7 @@ export class AuthenticationService {
 
   async getToken(id: string, user: User) {
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtservice.signAsync(
+      this.jwtService.signAsync(
         {
           sub: id,
           user: user._id,
@@ -95,7 +94,7 @@ export class AuthenticationService {
           expiresIn: '30m',
         },
       ),
-      this.jwtservice.signAsync(
+      this.jwtService.signAsync(
         {
           sub: id,
           user: user._id,
