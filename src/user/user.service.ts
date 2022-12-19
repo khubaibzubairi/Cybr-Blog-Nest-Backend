@@ -104,4 +104,8 @@ export class UserService {
 
     return banRemoved;
   }
+
+  async delteAll(): Promise<any> {
+    return await this.userModel.deleteMany();
+  }
 }

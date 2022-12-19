@@ -28,7 +28,7 @@ import { User, userDocument } from 'src/schema/user.schema';
 import { UserGuard } from 'src/guard/user.guard';
 import { Cron } from '@nestjs/schedule';
 // @ApiSecurity('basic')
-@ApiTags('C')
+@ApiTags('Posts')
 @Controller('blog-posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}

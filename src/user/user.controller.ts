@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -13,6 +14,7 @@ import { Update_RefToken_UserDto } from '../dto/updateRefToken.dto';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { UserGuard } from 'src/guard/user.guard';
+import { AdminGuard } from 'src/guard/admin.guard';
 @ApiTags('User')
 @Controller('users')
 export class UserController {
@@ -50,7 +52,6 @@ export class UserController {
   }
 
   @ApiBearerAuth('Jwt_Token')
-  @ApiProperty({ type: User })
   @UseGuards(AccessTokenGuard, UserGuard)
   @Patch(':id')
   async update(
@@ -63,16 +64,16 @@ export class UserController {
     return updated;
   }
 
-  @UseGuards(AccessTokenGuard)
-  @Patch()
-  async updateRefToken(
-    @Param('id') id: string,
-    @Body('body') body: Update_RefToken_UserDto,
-  ) {
-    return await this.userService.updateRefToken(id, body);
-  }
+  // @UseGuards(AccessTokenGuard)
+  // @Patch()
+  // async updateRefToken(
+  //   @Param('id') id: string,
+  //   @Body('body') body: Update_RefToken_UserDto,
+  // ) {
+  //   return await this.userService.updateRefToken(id, body);
+  // }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Patch('makeadmin/:id')
   async makeAdmin(@Param('id') id: string): Promise<userDocument> {
     let updated = await this.userService.makeAdmin(id);
@@ -80,7 +81,7 @@ export class UserController {
     return updated;
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Patch('dismissAsAdmin/:id')
   async dismissAsAdmin(@Param('id') id: string): Promise<userDocument> {
     let updated = await this.userService.dismissAsAdmin(id);
@@ -88,9 +89,17 @@ export class UserController {
     return updated;
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Patch('banUser/:id')
   async banUser(@Param('id') id: string): Promise<userDocument> {
     return await this.userService.banUser(id);
+  }
+
+  @UseGuards(AccessTokenGuard, AdminGuard)
+  @Delete('deleteAll')
+  async deleteAll(): Promise<any> {
+    let deleted = await this.userService.delteAll();
+    console.log(deleted);
+    return deleted;
   }
 }

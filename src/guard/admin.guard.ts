@@ -1,11 +1,11 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { User } from 'src/schema/user.schema';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
-export class UserGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(private readonly userService: UserService) {}
-
   async canActivate(context: ExecutionContext): Promise<boolean> {
     let hasPermission: boolean = false;
 
@@ -21,8 +21,8 @@ export class UserGuard implements CanActivate {
     console.log('DbUserId', dbUser._id);
 
     if (
-      dbUser._id == params.id ||
-      dbUser.firstname == params.author ||
+      // dbUser._id == params.id ||
+      // dbUser.firstname == params.author ||
       dbUser.role[0] == 1
     ) {
       hasPermission = true;

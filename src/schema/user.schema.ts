@@ -48,6 +48,10 @@ export class User {
   @ApiProperty()
   @Prop()
   refreshToken: string;
+
+  @ApiProperty()
+  @Prop()
+  isActive: boolean;
 }
 
 export const userSchema = SchemaFactory.createForClass(User);
