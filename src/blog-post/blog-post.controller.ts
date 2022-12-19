@@ -28,7 +28,7 @@ import { User, userDocument } from 'src/schema/user.schema';
 import { UserGuard } from 'src/guard/user.guard';
 import { Cron } from '@nestjs/schedule';
 // @ApiSecurity('basic')
-@ApiTags('blog-posts')
+@ApiTags('C')
 @Controller('blog-posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
@@ -41,6 +41,14 @@ export class BlogPostController {
     const user = req.user.user;
     // if(req.user.user._id){}
     return await this.blogPostService.create(user, post);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Get('count')
+  async count(): Promise<number> {
+    let postsCounted = await this.blogPostService.count();
+    console.log(postsCounted);
+    return postsCounted;
   }
 
   @ApiProperty()

@@ -18,6 +18,10 @@ export class BlogPostService {
     return await this.postModel.create(post);
   }
 
+  async count():Promise<number>{
+    return await this.postModel.count()
+  }
+
   async findAll(): Promise<postDocument[]> {
     return await this.postModel.find();
   }

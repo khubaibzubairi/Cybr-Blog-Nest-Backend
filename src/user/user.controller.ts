@@ -25,6 +25,14 @@ export class UserController {
   // }
 
   @UseGuards(AccessTokenGuard)
+  @Get('count')
+  async count(): Promise<number> {
+    let counted = await this.userService.count();
+    console.log(counted);
+    return counted;
+  }
+
+  @UseGuards(AccessTokenGuard)
   @Get()
   async findAll(): Promise<userDocument[]> {
     return await this.userService.findAll();

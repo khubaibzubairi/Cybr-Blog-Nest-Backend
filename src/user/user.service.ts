@@ -19,6 +19,10 @@ export class UserService {
     return await this.userModel.create(body);
   }
 
+  async count(): Promise<number> {
+    return await this.userModel.count();
+  }
+
   async findAll(): Promise<userDocument[]> {
     return await this.userModel.find();
   }
