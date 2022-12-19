@@ -73,7 +73,7 @@ export class UserService {
 
     let user: User = await this.userModel.findById({ _id: id });
 
-    user.role[0] = 2;
+    user.isActive = false;
 
     banned = await this.userModel.findByIdAndUpdate(user._id, user, {
       new: true,
@@ -84,7 +84,7 @@ export class UserService {
     const job = new CronJob(CronExpression.EVERY_10_SECONDS, async () => {
       let user: User = await this.userModel.findById({ _id: id });
 
-      user.role[0] = 0;
+      user.isActive = true;
 
       banRemoved = await this.userModel.findByIdAndUpdate(user._id, user, {
         new: true,

@@ -6,7 +6,6 @@ import { BlogPost } from 'src/schema/blog.schema';
 export enum Role {
   USER = 0,
   ADMIN = 1,
-  BAN = 2,
 }
 
 @Schema({ timestamps: true })
@@ -50,7 +49,7 @@ export class User {
   refreshToken: string;
 
   @ApiProperty()
-  @Prop()
+  @Prop({ required: true, default: true })
   isActive: boolean;
 }
 
