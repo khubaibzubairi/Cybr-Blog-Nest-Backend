@@ -4,10 +4,10 @@ import { UserController } from './user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, userSchema } from '../schema/user.schema';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
+import { BlogPostModule } from 'src/blog-post/blog-post.module';
 
 @Module({
   imports: [
-    // forwardRef(() => AuthenticationModule),
     MongooseModule.forFeature([
       {
         name: User.name,

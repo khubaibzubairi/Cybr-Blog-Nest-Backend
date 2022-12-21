@@ -6,11 +6,13 @@ import { ProfileController } from 'src/image/profile/profile.controller';
 import { Update_RefToken_UserDto } from '../dto/updateRefToken.dto';
 import { User, userDocument } from '../schema/user.schema';
 import { CronJob } from 'cron';
+import { BlogPost, postDocument } from 'src/schema/blog.schema';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<userDocument>,
+    // @InjectModel(BlogPost.name) private readonly postModel: Model<postDocument>,
     private scheduler: SchedulerRegistry,
   ) {}
 

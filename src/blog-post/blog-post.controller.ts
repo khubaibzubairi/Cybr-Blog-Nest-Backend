@@ -39,7 +39,7 @@ export class BlogPostController {
   @Post()
   async create(@Request() req, @Body() post: BlogPost): Promise<BlogPost> {
     const user = req.user.user;
-    // if(req.user.user._id){}
+
     return await this.blogPostService.create(user, post);
   }
 
@@ -112,5 +112,16 @@ export class BlogPostController {
         return error;
       }
     });
+  }
+
+  @Get('userPosts/:id')
+  async findUserPosts(@Param('id') id: string): Promise<postDocument[]> {
+    let posts = await this.blogPostService.findUserPosts(id);
+    if (posts) {
+      console.log(posts);
+      return posts;
+    } else {
+      console.log('NO POSTS FOUND FOR THIS USER');
+    }
   }
 }

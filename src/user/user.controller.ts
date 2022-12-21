@@ -15,6 +15,7 @@ import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { UserGuard } from 'src/guard/user.guard';
 import { AdminGuard } from 'src/guard/admin.guard';
+import { postDocument } from 'src/schema/blog.schema';
 @ApiTags('User')
 @Controller('users')
 export class UserController {

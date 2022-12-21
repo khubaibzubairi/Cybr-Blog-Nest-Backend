@@ -5,7 +5,7 @@ import { User } from 'src/schema/user.schema';
 
 @Schema({ timestamps: true })
 export class BlogPost {
-  @ApiProperty()
+  // @ApiProperty()
   id: string;
 
   @ApiProperty({ type: String, description: 'The title of the Blog Post' })
