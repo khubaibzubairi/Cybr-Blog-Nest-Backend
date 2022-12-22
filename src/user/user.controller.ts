@@ -27,7 +27,7 @@ export class UserController {
   //   return await this.userService.create(body);
   // }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Get('count')
   async count(): Promise<number> {
     let counted = await this.userService.count();
@@ -35,7 +35,7 @@ export class UserController {
     return counted;
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Get()
   async findAll(): Promise<userDocument[]> {
     return await this.userService.findAll();

@@ -23,11 +23,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
-import { UserDec } from 'src/decorator/user/user.decorator';
-import { User, userDocument } from 'src/schema/user.schema';
 import { UserGuard } from 'src/guard/user.guard';
-import { Cron } from '@nestjs/schedule';
-// @ApiSecurity('basic')
+@ApiSecurity('basic')
 @ApiTags('Posts')
 @Controller('blog-posts')
 export class BlogPostController {
@@ -35,7 +32,7 @@ export class BlogPostController {
 
   @ApiBearerAuth('Jwt_Token')
   @ApiProperty({ type: BlogPost })
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Post()
   async create(@Request() req, @Body() post: BlogPost): Promise<BlogPost> {
     const user = req.user.user;
@@ -43,7 +40,7 @@ export class BlogPostController {
     return await this.blogPostService.create(user, post);
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Get('count')
   async count(): Promise<number> {
     let postsCounted = await this.blogPostService.count();
@@ -54,7 +51,6 @@ export class BlogPostController {
   @ApiProperty()
   @Get('all')
   async findAll(): Promise<BlogPost[]> {
-    // console.log(query);
     return await this.blogPostService.findAll();
   }
 
@@ -90,7 +86,7 @@ export class BlogPostController {
   }
 
   @ApiProperty()
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Delete(':id')
   async deleteOne(@Param('id') id: string): Promise<unknown> {
     const getpost = await this.blogPostService.getById(id);
@@ -104,6 +100,7 @@ export class BlogPostController {
     }
   }
 
+  @UseGuards(AccessTokenGuard, UserGuard)
   @Delete('server/:filename')
   async fromDiskStorage(@Param('filename') filename: string) {
     fs.unlink(`./assets/${filename}`, (error) => {
