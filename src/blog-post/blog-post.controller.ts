@@ -24,6 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { UserGuard } from 'src/guard/user.guard';
+import { AdminGuard } from 'src/guard/admin.guard';
 @ApiSecurity('basic')
 @ApiTags('Blog-Posts')
 @Controller('blog-posts')
@@ -40,7 +41,7 @@ export class BlogPostController {
     return await this.blogPostService.create(user, post);
   }
 
-  @UseGuards(AccessTokenGuard, UserGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Get('count')
   async count(): Promise<number> {
     let postsCounted = await this.blogPostService.count();
