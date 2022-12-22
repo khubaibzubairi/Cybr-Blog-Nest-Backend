@@ -83,22 +83,25 @@ export class UserService {
 
     console.log('Baned User', banned);
 
-    const job: CronJob = new CronJob(
-      CronExpression.EVERY_10_SECONDS,
-      async () => {
-        let user: User = await this.userModel.findById({ _id: id });
+    const job = new CronJob(CronExpression.EVERY_10_SECONDS, async () => {
+      let user: User = await this.userModel.findById({ _id: id });
 
-        user.isActive = true;
+      user.isActive = true;
 
-        banRemoved = await this.userModel.findByIdAndUpdate(user._id, user, {
-          new: true,
-        });
+      banRemoved = await this.userModel.findByIdAndUpdate(user._id, user, {
+        new: true,
+      });
 
-        console.log('Revoked', banRemoved);
-      },
-    );
+      console.log('Revoked', banRemoved);
+    });
 
-    this.scheduler.addCronJob('name', job);
+    let name: string = Array(15)
+      .fill(null)
+      .map(() => Math.random().toString(36).substr(2))
+      .join('');
+    console.log(name);
+
+    this.scheduler.addCronJob(name, job);
     job.start();
 
     setTimeout(() => {
@@ -107,6 +110,7 @@ export class UserService {
 
     return banRemoved;
   }
+  ban() {}
 
   async delteAll(): Promise<any> {
     return await this.userModel.deleteMany();

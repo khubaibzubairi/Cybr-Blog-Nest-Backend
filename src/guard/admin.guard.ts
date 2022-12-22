@@ -1,7 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { AuthenticationService } from 'src/authentication/authentication.service';
-import { BlogPostService } from 'src/blog-post/blog-post.service';
+
 import { User } from 'src/schema/user.schema';
 import { UserService } from 'src/user/user.service';
 import * as jwt from 'jsonwebtoken';
@@ -16,13 +14,13 @@ export class AdminGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     let hasPermission: boolean = false;
 
-    console.log('TOKEN', AuthenticationService.jwtToken);
+    // console.log('TOKEN', AuthenticationService.jwtToken);
 
-    let token = AuthenticationService.jwtToken;
-    var { header, payload, signature } = jwt.decode(token.accessToken, {
-      complete: true,
-    });
-    console.log('ID', payload.sub);
+    // let token = AuthenticationService.jwtToken;
+    // var { header, payload, signature } = jwt.decode(token.accessToken, {
+    //   complete: true,
+    // });
+    // console.log('ID', payload.sub);
 
     const request = context.switchToHttp().getRequest();
 
