@@ -8,17 +8,14 @@ import { PostsController } from 'src/image/posts/posts.controller';
 
 @Injectable()
 export class BlogPostService {
-  // static u: User;
-
   constructor(
     @InjectModel(BlogPost.name) private postModel: Model<postDocument>,
   ) {}
   async create(author: User, post: BlogPost): Promise<postDocument> {
     post.slug = await this.generateSlug(post.title);
     post.author = author;
-    // BlogPostService.u = author;
 
-    // post.image = PostsController.imagePath;
+    post.image = PostsController.imagePath;
     return await this.postModel.create(post);
   }
 
