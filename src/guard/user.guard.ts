@@ -23,7 +23,7 @@ export class UserGuard implements CanActivate {
     if (
       dbUser._id == params.id ||
       dbUser.firstname == params.author ||
-      dbUser.role[0] == 1
+      dbUser.role[0] == 0
     ) {
       hasPermission = true;
       return user && hasPermission;

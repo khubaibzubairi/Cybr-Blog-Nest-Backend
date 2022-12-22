@@ -18,5 +18,6 @@ import { ScheduleModule } from '@nestjs/schedule';
   ],
   controllers: [BlogPostController],
   providers: [BlogPostService],
+  exports: [BlogPostService],
 })
 export class BlogPostModule {}

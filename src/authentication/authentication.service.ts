@@ -49,7 +49,7 @@ export class AuthenticationService {
     const matchPassword = await bcrypt.compare(data.password, user.password);
 
     if (matchPassword) {
-      const tokens = await this.getToken(user.id, user);
+      const tokens = await this.getToken(user._id, user);
       AuthenticationService.jwtToken = tokens;
 
       const hashedRefToken = await this.updateRefreshToken(

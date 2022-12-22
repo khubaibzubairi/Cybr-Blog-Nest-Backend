@@ -6,13 +6,14 @@ import {
   Request,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiBody } from '@nestjs/swagger';
+import { ApiConsumes, ApiBody, ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
 import { PostsService } from './posts.service';
 
-@Controller('posts')
+@ApiTags('BlogPost Image')
+@Controller('blogpost')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
   static imagePath: string;

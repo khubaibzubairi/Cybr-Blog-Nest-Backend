@@ -25,7 +25,7 @@ import {
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { UserGuard } from 'src/guard/user.guard';
 @ApiSecurity('basic')
-@ApiTags('Posts')
+@ApiTags('Blog-Posts')
 @Controller('blog-posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
@@ -48,11 +48,11 @@ export class BlogPostController {
     return postsCounted;
   }
 
-  @ApiProperty()
-  @Get('all')
-  async findAll(): Promise<BlogPost[]> {
-    return await this.blogPostService.findAll();
-  }
+  // @ApiProperty()
+  // @Get('all')
+  // async findAll(): Promise<BlogPost[]> {
+  //   return await this.blogPostService.findAll();
+  // }
 
   @ApiProperty()
   @UseGuards(AccessTokenGuard, UserGuard)

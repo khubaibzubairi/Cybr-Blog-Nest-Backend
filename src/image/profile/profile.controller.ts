@@ -6,12 +6,12 @@ import {
   Request,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiBody } from '@nestjs/swagger';
+import { ApiConsumes, ApiBody, ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { PostsController } from '../posts/posts.controller';
 import { ProfileService } from './profile.service';
-
+@ApiTags('UserProfile Image')
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}

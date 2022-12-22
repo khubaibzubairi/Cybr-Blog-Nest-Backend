@@ -5,9 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, userSchema } from '../schema/user.schema';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { BlogPostModule } from 'src/blog-post/blog-post.module';
+import { PostsModule } from 'src/image/posts/posts.module';
 
 @Module({
   imports: [
+    PostsModule,
     MongooseModule.forFeature([
       {
         name: User.name,

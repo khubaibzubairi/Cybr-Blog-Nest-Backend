@@ -18,7 +18,7 @@ export class BlogPostService {
     post.author = author;
     // BlogPostService.u = author;
 
-    post.image = PostsController.imagePath;
+    // post.image = PostsController.imagePath;
     return await this.postModel.create(post);
   }
 
@@ -26,9 +26,9 @@ export class BlogPostService {
     return await this.postModel.count();
   }
 
-  async findAll(): Promise<postDocument[]> {
-    return await this.postModel.find();
-  }
+  // async findAll(): Promise<postDocument[]> {
+  //   return await this.postModel.find();
+  // }
 
   async findByAuthor(author: string): Promise<postDocument[]> {
     return await this.postModel.find({ 'author.firstname': author });
