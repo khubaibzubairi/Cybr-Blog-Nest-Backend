@@ -15,7 +15,8 @@ import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { UserGuard } from 'src/guard/user.guard';
 import { AdminGuard } from 'src/guard/admin.guard';
-import { postDocument } from 'src/schema/blog.schema';
+import * as fs from 'fs';
+
 @ApiTags('User')
 @Controller('users')
 export class UserController {
@@ -64,15 +65,6 @@ export class UserController {
     return updated;
   }
 
-  // @UseGuards(AccessTokenGuard)
-  // @Patch()
-  // async updateRefToken(
-  //   @Param('id') id: string,
-  //   @Body('body') body: Update_RefToken_UserDto,
-  // ) {
-  //   return await this.userService.updateRefToken(id, body);
-  // }
-
   @UseGuards(AccessTokenGuard, AdminGuard)
   @Patch('makeadmin/:id')
   async makeAdmin(@Param('id') id: string): Promise<userDocument> {
@@ -101,5 +93,23 @@ export class UserController {
     let deleted = await this.userService.delteAll();
     console.log(deleted);
     return deleted;
+  }
+
+  @Patch('removeUserImage/:id')
+  async removeUserPhoto(@Param('id') id: string): Promise<userDocument> {
+    let updated = await this.userService.removeUserPhoto(id);
+    console.log(updated);
+    return updated;
+  }
+
+  @UseGuards(AccessTokenGuard, UserGuard)
+  @Delete('server/:filename')
+  async fromDiskStorage(@Param('filename') filename: string) {
+    fs.unlink(`./assets/profile/${filename}`, (error) => {
+      if (error) {
+        console.log(error);
+        return error;
+      }
+    });
   }
 }

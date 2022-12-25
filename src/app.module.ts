@@ -22,6 +22,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 
     ServeStaticModule.forRoot(
       {
+        rootPath: join(__dirname, '..', 'assets'),
+        renderPath: 'assets',
+      },
+      {
         rootPath: join(__dirname, '..', 'assets/posts'),
         renderPath: '/posts',
       },

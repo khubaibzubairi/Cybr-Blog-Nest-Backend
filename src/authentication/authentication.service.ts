@@ -64,10 +64,6 @@ export class AuthenticationService {
     }
   }
 
-  async logout(id: string) {
-    return await this.userService.updateRefToken(id, { refreshToken: null });
-  }
-
   async hashToken(token: string) {
     const saltOrRounds = 10;
     return await bcrypt.hash(token, saltOrRounds);

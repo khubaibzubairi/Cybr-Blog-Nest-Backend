@@ -7,6 +7,7 @@ import { Update_RefToken_UserDto } from '../dto/updateRefToken.dto';
 import { User, userDocument } from '../schema/user.schema';
 import { CronJob } from 'cron';
 import { BlogPost, postDocument } from 'src/schema/blog.schema';
+import { use } from 'passport';
 
 @Injectable()
 export class UserService {
@@ -114,5 +115,14 @@ export class UserService {
 
   async delteAll(): Promise<any> {
     return await this.userModel.deleteMany();
+  }
+
+  async removeUserPhoto(id: string): Promise<userDocument> {
+    let user: userDocument = await this.userModel.findById(id);
+    if (user) {
+      user.image = '7ef103df344.jpg';
+      // let upated = await this.userModel.findByIdAndUpdate();
+      return user;
+    }
   }
 }

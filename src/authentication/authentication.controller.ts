@@ -33,17 +33,6 @@ export class AuthenticationController {
     return await this.authenticationService.signIn(body);
   }
 
-  @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth('Jwt_Token')
-  @Get('logout')
-  async logout(@Req() req: Request) {
-    const logged = await this.authenticationService.logout(req.user['sub']);
-    return {
-      msg: 'Logged Out User',
-      User: logged,
-    };
-  }
-
   @ApiBearerAuth('JWT_Refresh')
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')

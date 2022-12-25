@@ -50,12 +50,6 @@ export class BlogPostController {
     return postsCounted;
   }
 
-  // @ApiProperty()
-  // @Get('all')
-  // async findAll(): Promise<BlogPost[]> {
-  //   return await this.blogPostService.findAll();
-  // }
-
   @ApiProperty()
   @UseGuards(AccessTokenGuard, UserGuard)
   @Get(':author')
@@ -107,7 +101,7 @@ export class BlogPostController {
   @UseGuards(AccessTokenGuard, UserGuard)
   @Delete('server/:filename')
   async fromDiskStorage(@Param('filename') filename: string) {
-    fs.unlink(`./assets/${filename}`, (error) => {
+    fs.unlink(`./assets/posts/${filename}`, (error) => {
       if (error) {
         console.log(error);
         return error;
