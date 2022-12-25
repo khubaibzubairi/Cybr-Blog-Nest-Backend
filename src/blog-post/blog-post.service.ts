@@ -23,10 +23,6 @@ export class BlogPostService {
     return await this.postModel.count();
   }
 
-  // async findAll(): Promise<postDocument[]> {
-  //   return await this.postModel.find();
-  // }
-
   async findByAuthor(author: string): Promise<postDocument[]> {
     return await this.postModel.find({ 'author.firstname': author });
   }
@@ -39,7 +35,7 @@ export class BlogPostService {
     } else if (query.text) {
       return await this.postModel.find({ $text: { $search: query.text } });
     } else {
-      return await this.postModel.find();
+      return await this.postModel.find().populate('author');
     }
   }
 

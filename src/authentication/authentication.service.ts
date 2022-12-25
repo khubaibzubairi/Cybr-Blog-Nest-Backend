@@ -50,7 +50,6 @@ export class AuthenticationService {
 
     if (matchPassword) {
       const tokens = await this.getToken(user._id, user);
-      AuthenticationService.jwtToken = tokens;
 
       const hashedRefToken = await this.updateRefreshToken(
         user._id,

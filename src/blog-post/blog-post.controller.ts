@@ -25,6 +25,7 @@ import {
 import { AccessTokenGuard } from 'src/guard/accessToken.guard';
 import { UserGuard } from 'src/guard/user.guard';
 import { AdminGuard } from 'src/guard/admin.guard';
+import { userDocument } from 'src/schema/user.schema';
 @ApiSecurity('basic')
 @ApiTags('Blog-Posts')
 @Controller('blog-posts')
@@ -65,7 +66,9 @@ export class BlogPostController {
 
   @ApiProperty()
   @Get()
-  async get(@Query() query: BlogPost): Promise<BlogPost[] | BlogPost> {
+  async get(
+    @Query() query: BlogPost,
+  ): Promise<BlogPost[] | BlogPost | userDocument> {
     console.log(query);
     return await this.blogPostService.find(query);
   }

@@ -46,7 +46,6 @@ export class UserController {
     return await this.userService.findOneByUserName(username);
   }
 
-  @UseGuards()
   @Get('byId/:id')
   async findById(@Param('id') id: string): Promise<userDocument> {
     return await this.userService.findOneById(id);
