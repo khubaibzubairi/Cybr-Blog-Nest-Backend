@@ -14,7 +14,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://0.0.0.0:27017/cybr-blog'),
+    // MongooseModule.forRoot('mongodb://0.0.0.0:27017/cybr-blog'),
+    MongooseModule.forRoot(
+      'mongodb+srv://cybr-blog-DB:1HsNYm3STTyHprNd@cluster0.awzjfmp.mongodb.net/cybr-blog?retryWrites=true&w=majority',
+    ),
     BlogPostModule,
 
     PostsModule,
