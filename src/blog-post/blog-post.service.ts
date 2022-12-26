@@ -35,7 +35,9 @@ export class BlogPostService {
     } else if (query.text) {
       return await this.postModel.find({ $text: { $search: query.text } });
     } else if (query.author) {
-      return await this.postModel.find({ author: query.author });
+      return await this.postModel
+        .find({ author: query.author })
+        .populate('author');
     } else {
       return await this.postModel.find().populate('author');
     }

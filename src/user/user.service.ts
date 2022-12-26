@@ -120,9 +120,11 @@ export class UserService {
   async removeUserPhoto(id: string): Promise<userDocument> {
     let user: userDocument = await this.userModel.findById(id);
     if (user) {
-      user.image = '7ef103df344.jpg';
-      // let upated = await this.userModel.findByIdAndUpdate();
-      return user;
+      user.image = 'no-image.jpg';
+      let upated = await this.userModel.findByIdAndUpdate(user._id, user, {
+        new: true,
+      });
+      return upated;
     }
   }
 }
